@@ -1,0 +1,13 @@
+{
+  "name": "SpiderVerse Chat",
+  "short_name": "SpiderVerse",
+  "start_url": "/spiderverse/",
+  "scope": "/spiderverse/",
+  "display": "standalone",
+  "background_color": "#030002",
+  "theme_color": "#030002",
+  "icons": [
+    {"src": "icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
