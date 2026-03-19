@@ -10,8 +10,8 @@
 <meta name="application-name" content="SpiderVerse"/>
 <meta name="theme-color" content="#030002"/>
 <meta name="description" content="SpiderVerse - Secure Spider-Man Chat"/>
-<link rel="manifest" id="pwa-manifest"/>
-<link rel="apple-touch-icon" id="apple-icon"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon.png"/>
 <title>SpiderVerse Chat 🕷️</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
@@ -1159,96 +1159,6 @@ window.addEventListener('resize',()=>{updateMobBar();if(!isMob())closeSB();});
 
 /* ══ PWA SETUP ══ */
 (function setupPWA(){
-  // Create spider icon as canvas data URL
-  const canvas=document.createElement('canvas');
-  canvas.width=512;canvas.height=512;
-  const ctx=canvas.getContext('2d');
-
-  // Background - dark red gradient
-  const grad=ctx.createRadialGradient(256,256,0,256,256,256);
-  grad.addColorStop(0,'#1a0000');
-  grad.addColorStop(1,'#030002');
-  ctx.fillStyle=grad;
-  ctx.beginPath();
-  ctx.roundRect(0,0,512,512,80);
-  ctx.fill();
-
-  // Outer web circle
-  ctx.strokeStyle='rgba(230,57,70,0.5)';
-  ctx.lineWidth=3;
-  ctx.beginPath();ctx.arc(256,256,200,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.arc(256,256,140,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.arc(256,256,80,0,Math.PI*2);ctx.stroke();
-
-  // Web lines
-  ctx.strokeStyle='rgba(230,57,70,0.4)';
-  ctx.lineWidth=2;
-  for(let i=0;i<8;i++){
-    const angle=(i/8)*Math.PI*2;
-    ctx.beginPath();
-    ctx.moveTo(256,256);
-    ctx.lineTo(256+Math.cos(angle)*220,256+Math.sin(angle)*220);
-    ctx.stroke();
-  }
-
-  // Spider body
-  ctx.fillStyle='#e63946';
-  ctx.shadowColor='#ff1744';
-  ctx.shadowBlur=20;
-  // Head
-  ctx.beginPath();ctx.arc(256,210,55,0,Math.PI*2);ctx.fill();
-  // Body
-  ctx.beginPath();ctx.ellipse(256,310,45,65,0,0,Math.PI*2);ctx.fill();
-
-  // Spider eyes
-  ctx.fillStyle='#ffffff';
-  ctx.shadowBlur=15;ctx.shadowColor='#ffffff';
-  ctx.beginPath();ctx.ellipse(232,200,22,16,-.3,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(280,200,22,16,.3,0,Math.PI*2);ctx.fill();
-
-  // Web pattern on body
-  ctx.strokeStyle='rgba(0,0,0,0.4)';
-  ctx.lineWidth=2;ctx.shadowBlur=0;
-  ctx.beginPath();ctx.arc(256,310,40,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.arc(256,310,25,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(216,310);ctx.lineTo(296,310);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(256,270);ctx.lineTo(256,350);ctx.stroke();
-
-  // Legs
-  ctx.strokeStyle='#e63946';
-  ctx.lineWidth=8;ctx.lineCap='round';ctx.shadowBlur=0;
-  const legs=[[180,280,80,230],[170,300,60,260],[165,325,55,300],[170,350,60,340],
-              [332,280,432,230],[342,300,452,260],[347,325,457,300],[342,350,452,340]];
-  legs.forEach(([x1,y1,x2,y2])=>{
-    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
-  });
-
-  const iconDataURL=canvas.toDataURL('image/png');
-
-  // Set apple touch icon
-  const appleIcon=document.getElementById('apple-icon');
-  if(appleIcon)appleIcon.href=iconDataURL;
-
-  // Create and inject manifest
-  const manifest={
-    name:'SpiderVerse Chat',
-    short_name:'SpiderVerse',
-    description:'Secure Spider-Man themed chat app',
-    start_url:'.',
-    display:'standalone',
-    background_color:'#030002',
-    theme_color:'#030002',
-    orientation:'portrait',
-    icons:[
-      {src:iconDataURL,sizes:'512x512',type:'image/png',purpose:'any maskable'},
-      {src:iconDataURL,sizes:'192x192',type:'image/png',purpose:'any maskable'},
-    ]
-  };
-  const manifestBlob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
-  const manifestURL=URL.createObjectURL(manifestBlob);
-  const manifestLink=document.getElementById('pwa-manifest');
-  if(manifestLink)manifestLink.href=manifestURL;
-
   // Register service worker inline
   if('serviceWorker' in navigator){
     const swCode=`
